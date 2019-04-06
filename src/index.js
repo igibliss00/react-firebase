@@ -18,17 +18,25 @@ const store = createStore(rootReducer,
     compose(
         applyMiddleware(thunk.withExtraArgument({getFirebase, getFirestore})),
         reduxFirestore(fbConfig),
-        reactReduxFirebase(fbConfig)
+        reactReduxFirebase(fbConfig, {attachAuthIsReady: true})
     )
 );
 
-ReactDOM.render(
-    <Provider store={store}>
-        <App />
-    </Provider>, 
-    document.getElementById('root'));
 
+// attachAuthIsReady enables firebaseAuthIsReady which waits for firebase to figure out we're logged in
+// and then React app figrues out that we're logged in.  Only then renders so that the app doesn't get loaded
+// until the authentication is finished 
+store.firebaseAuthIsReady.then(() => {
+    ReactDOM.render(
+        <Provider store={store}>
+            <App />
+        </Provider>, 
+        document.getElementById('root'));
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
+})
+
+
+
