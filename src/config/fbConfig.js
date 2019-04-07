@@ -5,7 +5,7 @@ import 'firebase/auth'
 
 // Initialize Firebase
 var config = {
-    apiKey: "AIzaSyCL9pJgTMCr68NHhnzidxjObhxRKsaWRUs",
+    apiKey: "YOUR_KEY",
     authDomain: "net-ninja-marioplan-12c4b.firebaseapp.com",
     databaseURL: "https://net-ninja-marioplan-12c4b.firebaseio.com",
     projectId: "net-ninja-marioplan-12c4b",

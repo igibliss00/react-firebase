@@ -11,7 +11,6 @@ const projectReducer = (state = iniState, action) => {
             console.log('error', action.err);
             return state;    
         default:
-            console.log('default');
             return state;
     }
 };
