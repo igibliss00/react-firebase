@@ -1,17 +1,21 @@
+import { CREATE_PROJECT, CREATE_PROJECT_ERROR } from './type';
+
 export const createProject = (project) => {
-    return (dispatch, getState, { getFirebase, getFirestore }) => {
-        // make async call to the database
-        const firebase = getFirebase();
-        firebase.collection('project').add({
+    return (dispatch, getState, { getFirestore }) => {
+        // makes an async call to the database
+        const firestore = getFirestore();
+        const profile = getState().firebase.profile;
+        const authorId = getState().firebase.auth.uid;
+        firestore.collection('projects').add({
             ...project,
-            authorFirstName: 'Martin',
-            authorLastName: 'Luthor',
-            authorId: 1234,
+            authorFirstName: profile.firstName,
+            authorLastName: profile.lastName,
+            authorId: authorId,
             createdAt: new Date()
         }).then(() => {
-            dispatch({type: 'CREATE_PROJECT', project })
+            dispatch({ type: CREATE_PROJECT, project })
         }).then(err => {
-            dispatch({type: 'CREATE_PROJECT_ERROR', err})
+            dispatch({ type: CREATE_PROJECT_ERROR, err})
         })
     }
 }

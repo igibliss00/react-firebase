@@ -18,10 +18,12 @@ const store = createStore(rootReducer,
     compose(
         applyMiddleware(thunk.withExtraArgument({getFirebase, getFirestore})),
         reduxFirestore(fbConfig),
-        reactReduxFirebase(fbConfig, {attachAuthIsReady: true})
+        // useFirestoreForProfile assigns the profile database to userProfile and stores it in Firestore
+        // this is useful because firebase only contains limited user info
+        // attachAuthIsReady is for authenticating before rendering
+        reactReduxFirebase(fbConfig, {userProfile: 'users', useFirestoreForProfile: true, attachAuthIsReady: true})
     )
 );
-
 
 // attachAuthIsReady enables firebaseAuthIsReady which waits for firebase to figure out we're logged in
 // and then React app figrues out that we're logged in.  Only then renders so that the app doesn't get loaded

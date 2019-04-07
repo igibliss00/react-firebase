@@ -17,7 +17,8 @@ class CreateProject extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        console.log(this.state);
+        this.props.createProject(this.state);
+        this.props.history.push('/');
     }
 
     render() {
@@ -30,11 +31,11 @@ class CreateProject extends Component {
                     <h5 className="grey-text text-darken-3">Create New Project</h5>
                     <div className="input-field">
                         <label htmlFor="title">Title</label>
-                        <input type="text" id="title" onChange={this.handleChange} value={this.state.input}/>
+                        <input type="text" id="title" onChange={this.handleChange} value={this.state.title}/>
                     </div>
                     <div className="input-field">
                         <label htmlFor="content">Project Content</label>
-                        <textarea id="content" className="materialize-textarea" onChange={this.handleChange} value={this.state.input}></textarea>
+                        <textarea id="content" className="materialize-textarea" onChange={this.handleChange} value={this.state.content}></textarea>
                     </div>
                     <div className="input-field">
                         <button className="btn pink lighten-1 z-depth-0">Create</button>
@@ -46,10 +47,10 @@ class CreateProject extends Component {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return ({
+const mapDispatchToProps = dispatch => {
+    return {
         createProject: project => dispatch(createProject(project)) 
-    });
+    };
 };
 
 const mapStateToProps = state => {
